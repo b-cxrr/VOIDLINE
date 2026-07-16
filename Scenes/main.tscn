@@ -2,15 +2,35 @@
 
 [ext_resource type="PackedScene" uid="uid://q4rkjo2rqfxe" path="res://Scenes/ground.tscn" id="1_bo1nx"]
 [ext_resource type="PackedScene" uid="uid://c56rcgu0latxr" path="res://Scenes/player.tscn" id="2_8gbba"]
+[ext_resource type="Texture2D" uid="uid://daeoidmm2jly2" path="res://Sprites/Placeholder_BG.png" id="3_8gbba"]
+[ext_resource type="Script" uid="uid://n6mpwmkbvk7r" path="res://Scripts/Node Scripts/obstacle_spawner.gd" id="4_jjvhh"]
+[ext_resource type="PackedScene" uid="uid://brvcdqhmhfkvt" path="res://Scenes/Obstacle_1.tscn" id="5_kry3j"]
 
 [node name="Main" type="Node2D" unique_id=1566659616]
 
 [node name="Ground" parent="." unique_id=596075265 instance=ExtResource("1_bo1nx")]
+start = 32.0
+end = -32.0
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1615457680]
-position = Vector2(0, -24)
-zoom = Vector2(4, 4)
+position = Vector2(0, -81)
+zoom = Vector2(5, 5)
 
 [node name="Player" parent="." unique_id=2019603646 instance=ExtResource("2_8gbba")]
-position = Vector2(-112, -19)
+position = Vector2(-112, -12)
 scale = Vector2(0.75, 0.75)
+
+[node name="BG" type="Node" parent="." unique_id=1501803197]
+
+[node name="PlaceholderBg" type="Sprite2D" parent="BG" unique_id=193264771]
+z_index = -1000
+position = Vector2(0, -97)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_8gbba")
+
+[node name="ObstacleSpawner" type="Node2D" parent="." unique_id=111016286]
+position = Vector2(481, -12)
+script = ExtResource("4_jjvhh")
+scenes_to_spawn = Array[PackedScene]([ExtResource("5_kry3j")])
+min_spawn_range = 150
+max_spawn_range = 400

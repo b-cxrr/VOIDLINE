@@ -1,13 +1,14 @@
 [gd_scene format=3 uid="uid://c56rcgu0latxr"]
 
 [ext_resource type="Texture2D" uid="uid://4pugnevsvuc" path="res://Sprites/Placeholder.png" id="1_4flbx"]
-[ext_resource type="Script" uid="uid://bkim2xof5v4xb" path="res://Scripts/player.gd" id="1_cvnsp"]
+[ext_resource type="Script" uid="uid://bkim2xof5v4xb" path="res://Scripts/Node Scripts/player.gd" id="1_cvnsp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tls2j"]
 radius = 7.0
 height = 26.0
 
 [node name="Player" type="CharacterBody2D" unique_id=2019603646]
+scale = Vector2(1.2, 1.2)
 script = ExtResource("1_cvnsp")
 
 [node name="Placeholder" type="Sprite2D" parent="." unique_id=1006882515]
@@ -18,3 +19,4 @@ position = Vector2(0, 3)
 shape = SubResource("CapsuleShape2D_tls2j")
 
 [node name="JumpBufferTimer" type="Timer" parent="." unique_id=124242482]
+wait_time = 0.1

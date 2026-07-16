@@ -31,6 +31,10 @@ func _input(event):
 
 
 func _try_jump(): #will need things adding
+	
+	if GameManager.is_game_over:
+		return
+	
 	jump_input = true
 	jump_buffer_timer.start()
 	
