@@ -4,8 +4,11 @@
 [ext_resource type="Script" uid="uid://bkim2xof5v4xb" path="res://Scripts/Node Scripts/player.gd" id="1_cvnsp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tls2j"]
-radius = 7.0
+radius = 8.333333
 height = 26.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tls2j"]
+size = Vector2(3.333332, 25)
 
 [node name="Player" type="CharacterBody2D" unique_id=2019603646]
 scale = Vector2(1.2, 1.2)
@@ -15,8 +18,16 @@ script = ExtResource("1_cvnsp")
 texture = ExtResource("1_4flbx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=204564402]
-position = Vector2(0, 3)
+position = Vector2(0, 2.5)
 shape = SubResource("CapsuleShape2D_tls2j")
+
+[node name="ObstacleDetector" type="Area2D" parent="." unique_id=623233443]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleDetector" unique_id=1291646795]
+position = Vector2(8.333333, 1.6666666)
+shape = SubResource("RectangleShape2D_tls2j")
 
 [node name="JumpBufferTimer" type="Timer" parent="." unique_id=124242482]
 wait_time = 0.1
+
+[connection signal="body_entered" from="ObstacleDetector" to="." method="_on_obstacle_detector_body_entered"]

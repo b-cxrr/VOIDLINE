@@ -40,3 +40,14 @@ func _try_jump(): #will need things adding
 	
 func _on_jump_buffer_timer_timeout():
 	jump_input = false
+
+
+func _on_obstacle_detector_body_entered(body: Node2D) -> void:
+	
+	if GameManager.is_game_over:
+		return
+	
+	if body.is_in_group("Obstacles"):
+		GameManager.end_game()
+		velocity.x = -500
+		velocity.y = -jump_force 

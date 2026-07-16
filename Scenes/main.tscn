@@ -5,6 +5,16 @@
 [ext_resource type="Texture2D" uid="uid://daeoidmm2jly2" path="res://Sprites/Placeholder_BG.png" id="3_8gbba"]
 [ext_resource type="Script" uid="uid://n6mpwmkbvk7r" path="res://Scripts/Node Scripts/obstacle_spawner.gd" id="4_jjvhh"]
 [ext_resource type="PackedScene" uid="uid://brvcdqhmhfkvt" path="res://Scenes/Obstacle_1.tscn" id="5_kry3j"]
+[ext_resource type="PackedScene" uid="uid://cmvaxsncf0ng5" path="res://Scenes/Obstacle_2.tscn" id="6_21xkr"]
+[ext_resource type="Script" uid="uid://dsn30kcamlm8v" path="res://Scripts/Node Scripts/distance_text.gd" id="7_6bp64"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_tls2j"]
+font_size = 113
+font_color = Color(0.525, 0, 0.7, 1)
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 16
+shadow_color = Color(0, 0, 0, 0.8901961)
 
 [node name="Main" type="Node2D" unique_id=1566659616]
 
@@ -17,7 +27,7 @@ position = Vector2(0, -81)
 zoom = Vector2(5, 5)
 
 [node name="Player" parent="." unique_id=2019603646 instance=ExtResource("2_8gbba")]
-position = Vector2(-112, -12)
+position = Vector2(-100.00001, -12)
 scale = Vector2(0.75, 0.75)
 
 [node name="BG" type="Node" parent="." unique_id=1501803197]
@@ -29,8 +39,21 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_8gbba")
 
 [node name="ObstacleSpawner" type="Node2D" parent="." unique_id=111016286]
-position = Vector2(481, -12)
+position = Vector2(481, -15)
 script = ExtResource("4_jjvhh")
-scenes_to_spawn = Array[PackedScene]([ExtResource("5_kry3j")])
+scenes_to_spawn = Array[PackedScene]([ExtResource("5_kry3j"), ExtResource("6_21xkr")])
 min_spawn_range = 150
 max_spawn_range = 400
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2100052919]
+
+[node name="DistanceText" type="Label" parent="CanvasLayer" unique_id=1378679400]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 193.0
+offset_bottom = 348.0
+grow_horizontal = 2
+text = "Distance Covered : 0m"
+label_settings = SubResource("LabelSettings_tls2j")
+horizontal_alignment = 1
+script = ExtResource("7_6bp64")
