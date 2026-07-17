@@ -14,7 +14,7 @@ size = Vector2(3.333332, 25)
 scale = Vector2(1.2, 1.2)
 script = ExtResource("1_cvnsp")
 
-[node name="Placeholder" type="Sprite2D" parent="." unique_id=1006882515]
+[node name="PlayerSprite" type="Sprite2D" parent="." unique_id=1006882515]
 texture = ExtResource("1_4flbx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=204564402]

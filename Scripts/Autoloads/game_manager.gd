@@ -1,6 +1,9 @@
 extends Node
 
 
+signal game_over
+signal game_started
+
 var starting_speed : float = 200
 var current_speed: float = starting_speed
 var max_speed: float = 1500
@@ -28,7 +31,13 @@ func start_game() -> void:
 	current_speed = starting_speed
 	distance = 0.0
 	is_game_over = false
+	game_started.emit()
 	
 func end_game():
 	is_game_over = true
 	current_speed = 0.0
+	game_over.emit()
+	if is_game_over:
+		return
+	
+	
