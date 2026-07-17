@@ -9,14 +9,24 @@
 [ext_resource type="PackedScene" uid="uid://cmvaxsncf0ng5" path="res://Scenes/Obstacle_2.tscn" id="6_21xkr"]
 [ext_resource type="Script" uid="uid://dsn30kcamlm8v" path="res://Scripts/Node Scripts/distance_text.gd" id="7_6bp64"]
 [ext_resource type="FontFile" uid="uid://ddq06sv0tkpkg" path="res://Fonts/TbjEpicCubeDemoBoldExp-e968p.ttf" id="7_d1ilt"]
+[ext_resource type="Shader" uid="uid://bj2dkkcsv76q3" path="res://Resources/glitch_overlay.gdshader" id="8_wsu2k"]
 [ext_resource type="Texture2D" uid="uid://cjrdqms0um2xu" path="res://Sprites/UI_Background.png" id="8_ynf5e"]
 [ext_resource type="Script" uid="uid://c855qkwk5x0ka" path="res://Scripts/Node Scripts/pause_button.gd" id="9_hptm8"]
 [ext_resource type="Script" uid="uid://ts75vdws5bhk" path="res://Scripts/Node Scripts/restart.gd" id="11_6iyac"]
 [ext_resource type="Script" uid="uid://4f4im3xwd2wx" path="res://Scripts/Node Scripts/game_over_screen.gd" id="11_fdnlq"]
+[ext_resource type="Script" uid="uid://ct0lp8cacqgkl" path="res://Scripts/Node Scripts/glitch_effects.gd" id="15_k12tt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tls2j"]
+shader = ExtResource("8_wsu2k")
+shader_parameter/intensity = 0.0
+shader_parameter/glitch_time = 0.0
+shader_parameter/rgb_separation = 0.00800000038
+shader_parameter/tear_strength = 0.030000001425
+shader_parameter/scanline_strength = 0.400000019
 
 [sub_resource type="LabelSettings" id="LabelSettings_g868d"]
 font = ExtResource("7_d1ilt")
-font_size = 27
+font_size = 32
 
 [sub_resource type="LabelSettings" id="LabelSettings_g7dly"]
 font = ExtResource("7_d1ilt")
@@ -63,6 +73,15 @@ max_spawn_range = 400
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2100052919]
 
+[node name="GlitchOverlay" type="ColorRect" parent="CanvasLayer" unique_id=76444382]
+material = SubResource("ShaderMaterial_tls2j")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
 [node name="GameOverScreen" type="TextureRect" parent="CanvasLayer" unique_id=1998803575]
 anchors_preset = 15
 anchor_right = 1.0
@@ -75,12 +94,21 @@ script = ExtResource("11_fdnlq")
 [node name="GameOverText" type="Label" parent="CanvasLayer/GameOverScreen" unique_id=942657726]
 layout_mode = 0
 offset_left = 322.0
-offset_top = 217.0
-offset_right = 792.0
-offset_bottom = 362.0
+offset_top = 247.0
+offset_right = 1600.0
+offset_bottom = 343.0
 text = "GAME OVER
+"
+label_settings = SubResource("LabelSettings_g868d")
+horizontal_alignment = 1
 
-YOU SURVIVED: "
+[node name="YouSurvivedText" type="Label" parent="CanvasLayer/GameOverScreen" unique_id=417202427]
+layout_mode = 0
+offset_left = 729.0
+offset_top = 313.0
+offset_right = 1199.0
+offset_bottom = 437.0
+text = "YOU SURVIVED: "
 label_settings = SubResource("LabelSettings_g868d")
 
 [node name="Restart" type="TextureButton" parent="CanvasLayer/GameOverScreen" unique_id=1342508378]
@@ -122,6 +150,9 @@ offset_bottom = 256.0
 scale = Vector2(0.6890046, 0.64062047)
 texture_normal = ExtResource("8_ynf5e")
 script = ExtResource("9_hptm8")
+
+[node name="GlitchEffects" type="Node" parent="." unique_id=984144693]
+script = ExtResource("15_k12tt")
 
 [connection signal="button_down" from="CanvasLayer/GameOverScreen/Restart" to="CanvasLayer/GameOverScreen/Restart" method="_on_button_down"]
 [connection signal="button_down" from="CanvasLayer/PauseButton" to="CanvasLayer/PauseButton" method="_on_button_down"]
