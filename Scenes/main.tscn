@@ -14,6 +14,8 @@
 [ext_resource type="Script" uid="uid://c855qkwk5x0ka" path="res://Scripts/Node Scripts/pause_button.gd" id="9_hptm8"]
 [ext_resource type="Script" uid="uid://ts75vdws5bhk" path="res://Scripts/Node Scripts/restart.gd" id="11_6iyac"]
 [ext_resource type="Script" uid="uid://4f4im3xwd2wx" path="res://Scripts/Node Scripts/game_over_screen.gd" id="11_fdnlq"]
+[ext_resource type="Texture2D" uid="uid://cipudmd7uohf6" path="res://Sprites/UI_Background96x96.png" id="12_k12tt"]
+[ext_resource type="Texture2D" uid="uid://c3e2ntr7bhkor" path="res://Sprites/pause_icon96x96.png" id="15_h1bgf"]
 [ext_resource type="Script" uid="uid://ct0lp8cacqgkl" path="res://Scripts/Node Scripts/glitch_effects.gd" id="15_k12tt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tls2j"]
@@ -24,13 +26,21 @@ shader_parameter/rgb_separation = 0.00800000038
 shader_parameter/tear_strength = 0.030000001425
 shader_parameter/scanline_strength = 0.400000019
 
-[sub_resource type="LabelSettings" id="LabelSettings_g868d"]
-font = ExtResource("7_d1ilt")
-font_size = 32
-
 [sub_resource type="LabelSettings" id="LabelSettings_g7dly"]
 font = ExtResource("7_d1ilt")
 font_size = 62
+
+[sub_resource type="LabelSettings" id="LabelSettings_g868d"]
+font = ExtResource("7_d1ilt")
+font_size = 40
+
+[sub_resource type="LabelSettings" id="LabelSettings_wsu2k"]
+font = ExtResource("7_d1ilt")
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_epbu7"]
+font = ExtResource("7_d1ilt")
+font_size = 20
 
 [sub_resource type="LabelSettings" id="LabelSettings_tls2j"]
 font = ExtResource("7_d1ilt")
@@ -53,8 +63,7 @@ position = Vector2(0, -81)
 zoom = Vector2(5, 5)
 
 [node name="Player" parent="." unique_id=2019603646 instance=ExtResource("2_8gbba")]
-position = Vector2(-100.00001, -12)
-scale = Vector2(0.75, 0.75)
+position = Vector2(-123, 0)
 
 [node name="BG" type="Node" parent="." unique_id=1501803197]
 
@@ -86,17 +95,56 @@ mouse_filter = 2
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -5.0
 grow_horizontal = 2
 grow_vertical = 2
+offset_transform_enabled = true
 texture = ExtResource("8_ynf5e")
+expand_mode = 1
 script = ExtResource("11_fdnlq")
+
+[node name="RestartArea" type="Control" parent="CanvasLayer/GameOverScreen" unique_id=2021221027]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 298.0
+offset_top = 638.0
+offset_right = -304.0
+offset_bottom = -154.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Restart" type="TextureButton" parent="CanvasLayer/GameOverScreen/RestartArea" unique_id=1342508378]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -128.0
+offset_right = 256.0
+offset_bottom = 128.0
+grow_vertical = 2
+size_flags_horizontal = 0
+texture_normal = ExtResource("12_k12tt")
+stretch_mode = 3
+script = ExtResource("11_6iyac")
+
+[node name="RESTART" type="Label" parent="CanvasLayer/GameOverScreen/RestartArea/Restart" unique_id=1854479888]
+layout_mode = 0
+offset_left = 234.0
+offset_top = 90.0
+offset_right = 647.0
+offset_bottom = 162.0
+text = "RESTART"
+label_settings = SubResource("LabelSettings_g7dly")
 
 [node name="GameOverText" type="Label" parent="CanvasLayer/GameOverScreen" unique_id=942657726]
 layout_mode = 0
-offset_left = 322.0
-offset_top = 247.0
-offset_right = 1600.0
-offset_bottom = 343.0
+offset_left = 730.0
+offset_top = 264.0
+offset_right = 1190.0
+offset_bottom = 359.0
+offset_transform_scale = Vector2(2, 2)
 text = "GAME OVER
 "
 label_settings = SubResource("LabelSettings_g868d")
@@ -104,55 +152,80 @@ horizontal_alignment = 1
 
 [node name="YouSurvivedText" type="Label" parent="CanvasLayer/GameOverScreen" unique_id=417202427]
 layout_mode = 0
-offset_left = 729.0
-offset_top = 313.0
-offset_right = 1199.0
-offset_bottom = 437.0
-text = "YOU SURVIVED: "
+offset_left = 685.0
+offset_top = 332.0
+offset_right = 1248.0
+offset_bottom = 387.0
+offset_transform_enabled = true
+text = "YOU SURVIVED:  0m"
 label_settings = SubResource("LabelSettings_g868d")
-
-[node name="Restart" type="TextureButton" parent="CanvasLayer/GameOverScreen" unique_id=1342508378]
-layout_mode = 0
-offset_left = 312.0
-offset_top = 393.00006
-offset_right = 1037.6846
-offset_bottom = 649.00006
-scale = Vector2(0.527, 0.491)
-texture_normal = ExtResource("8_ynf5e")
-script = ExtResource("11_6iyac")
-
-[node name="RESTART" type="Label" parent="CanvasLayer/GameOverScreen/Restart" unique_id=1854479888]
-layout_mode = 0
-offset_left = 288.42505
-offset_top = 89.61304
-offset_right = 573.05493
-offset_bottom = 134.41956
-text = "RESTART"
-label_settings = SubResource("LabelSettings_g7dly")
-
-[node name="DistanceText" type="Label" parent="CanvasLayer" unique_id=1378679400]
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = -40.0
-offset_top = 133.0
-offset_right = 56.0
-offset_bottom = 288.0
-grow_horizontal = 2
-text = " 0m"
-label_settings = SubResource("LabelSettings_tls2j")
 horizontal_alignment = 1
-script = ExtResource("7_6bp64")
 
-[node name="PauseButton" type="TextureButton" parent="CanvasLayer" unique_id=200108127]
-offset_left = 1743.0
-offset_right = 1999.0
+[node name="HighScoreText" type="Label" parent="CanvasLayer/GameOverScreen" unique_id=2019523750]
+layout_mode = 0
+offset_left = 730.0
+offset_top = 462.0
+offset_right = 1190.0
+offset_bottom = 506.0
+text = "BEST: 0m"
+label_settings = SubResource("LabelSettings_wsu2k")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NewHighScoreText" type="Label" parent="CanvasLayer/GameOverScreen" unique_id=163600549]
+layout_mode = 0
+offset_left = 730.0
+offset_top = 530.0
+offset_right = 1190.0
+offset_bottom = 558.0
+text = "NEW HIGH SCORE!"
+label_settings = SubResource("LabelSettings_epbu7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HUD" type="Control" parent="CanvasLayer" unique_id=1405398641]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PauseButton" type="TextureButton" parent="CanvasLayer/HUD" unique_id=200108127]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -256.0
 offset_bottom = 256.0
+grow_horizontal = 0
 scale = Vector2(0.6890046, 0.64062047)
 texture_normal = ExtResource("8_ynf5e")
 script = ExtResource("9_hptm8")
 
+[node name="PauseIcon" type="Sprite2D" parent="CanvasLayer/HUD/PauseButton" unique_id=1274067658]
+position = Vector2(126.26904, 126.43992)
+scale = Vector2(1.451369, 1.5609866)
+texture = ExtResource("15_h1bgf")
+
+[node name="DistanceText" type="Label" parent="CanvasLayer/HUD" unique_id=1378679400]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -143.0
+offset_right = 143.0
+offset_bottom = 155.0
+grow_horizontal = 2
+text = " 0m"
+label_settings = SubResource("LabelSettings_tls2j")
+horizontal_alignment = 3
+vertical_alignment = 1
+script = ExtResource("7_6bp64")
+
 [node name="GlitchEffects" type="Node" parent="." unique_id=984144693]
 script = ExtResource("15_k12tt")
 
-[connection signal="button_down" from="CanvasLayer/GameOverScreen/Restart" to="CanvasLayer/GameOverScreen/Restart" method="_on_button_down"]
-[connection signal="button_down" from="CanvasLayer/PauseButton" to="CanvasLayer/PauseButton" method="_on_button_down"]
+[connection signal="button_down" from="CanvasLayer/GameOverScreen/RestartArea/Restart" to="CanvasLayer/GameOverScreen/RestartArea/Restart" method="_on_button_down"]
+[connection signal="button_down" from="CanvasLayer/HUD/PauseButton" to="CanvasLayer/HUD/PauseButton" method="_on_button_down"]

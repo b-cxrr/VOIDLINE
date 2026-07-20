@@ -1,6 +1,5 @@
 extends Node
 
-
 signal game_over
 signal game_started
 
@@ -11,6 +10,7 @@ var speed_increase_rate : float = 5
 var distance : float = 0
 var is_game_over : bool = false
 var is_ending_game: bool = false
+var got_new_high_score: bool = false
 
 
 
@@ -33,6 +33,7 @@ func start_game() -> void:
 	distance = 0.0
 	is_game_over = false
 	is_ending_game = false
+	got_new_high_score = false
 	game_started.emit()
 	
 func end_game() -> void:
@@ -41,6 +42,7 @@ func end_game() -> void:
 	is_ending_game = false
 	is_game_over = true
 	current_speed = 0.0
+	got_new_high_score = SaveManager.submit_score(int(distance))
 	game_over.emit()
 
 func begin_game_over() -> void:

@@ -1,7 +1,9 @@
 extends CharacterBody2D
 
+@onready var landing_particles: GPUParticles2D = $LandingParticles
+@onready var animation_player: AnimationPlayer = $PlayerVisual/AnimationPlayer
 @onready var jump_buffer_timer : Timer = $JumpBufferTimer
-@onready var player_sprite : Sprite2D = $PlayerSprite
+@onready var player_sprite : Node2D = $PlayerVisual
 @export var jump_force : float = 500
 @export var gravity : float = 2200
 var is_dying : bool = false
@@ -12,6 +14,7 @@ var sprite_start_position: Vector2
 var sprite_start_scale: Vector2
 
 func _ready() -> void:
+	
 	is_dying = false
 	
 	
@@ -20,19 +23,27 @@ func _ready() -> void:
 	
 	player_sprite.visible = true
 	player_sprite.modulate = Color.WHITE
+	
+	animation_player.play("run_improved")
 
 func _physics_process(delta: float) -> void:
-	
+	var was_on_floor: = is_on_floor()
 	if not is_on_floor():
 		velocity.y += gravity * delta
+
 	if not is_dying:
 		if jump_input and is_on_floor():
 			jump_input = false
 			velocity.y = -jump_force
+			animation_player.play("Jump")
 			_play_glitch_jump()
 		
 		
 	move_and_slide()
+	
+	if not is_dying and not was_on_floor and is_on_floor():
+		animation_player.play("run_improved")
+		landing_particles.restart()
 	
 func _play_glitch_jump() -> void:
 	get_tree().call_group("glitch_effects", "play_jump_glitch")
@@ -230,6 +241,7 @@ func _try_jump() -> void: #will need things adding
 		return
 	
 	jump_input = true
+	
 	jump_buffer_timer.start()
 	
 func _on_jump_buffer_timer_timeout() -> void:
