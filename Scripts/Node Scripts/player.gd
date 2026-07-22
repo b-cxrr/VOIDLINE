@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+@onready var landing_sound : AudioStreamPlayer = $AudioStreamPlayer
 @onready var landing_particles: GPUParticles2D = $LandingParticles
 @onready var animation_player: AnimationPlayer = $PlayerVisual/AnimationPlayer
 @onready var jump_buffer_timer : Timer = $JumpBufferTimer
@@ -44,6 +45,7 @@ func _physics_process(delta: float) -> void:
 	if not is_dying and not was_on_floor and is_on_floor():
 		animation_player.play("run_improved")
 		landing_particles.restart()
+		landing_sound.play()
 	
 func _play_glitch_jump() -> void:
 	get_tree().call_group("glitch_effects", "play_jump_glitch")
