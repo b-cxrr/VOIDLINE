@@ -5,12 +5,18 @@ extends CharacterBody2D
 @onready var animation_player: AnimationPlayer = $PlayerVisual/AnimationPlayer
 @onready var jump_buffer_timer : Timer = $JumpBufferTimer
 @onready var player_sprite : Node2D = $PlayerVisual
+@onready var camera = $"../Camera2D"
 @export var jump_force : float = 500
 @export var gravity : float = 2200
+@export var coyote_time: float = 0.12
+
+var coyote_timer:float = 0.0
+
 var is_dying : bool = false
 
 var jump_input : bool = false
 var glitch_tween : Tween
+var squash_tween : Tween
 var sprite_start_position: Vector2
 var sprite_start_scale: Vector2
 
@@ -28,28 +34,41 @@ func _ready() -> void:
 	animation_player.play("run_improved")
 
 func _physics_process(delta: float) -> void:
-	var was_on_floor: = is_on_floor()
-	if not is_on_floor():
+	
+
+	var was_on_floor := is_on_floor()
+
+	if is_on_floor():
+		coyote_timer = coyote_time
+	else:
+		coyote_timer = max(coyote_timer - delta, 0.0)
 		velocity.y += gravity * delta
 
 	if not is_dying:
-		if jump_input and is_on_floor():
+		if jump_input and coyote_timer > 0.0:
 			jump_input = false
+			coyote_timer = 0.0
+
 			velocity.y = -jump_force
 			animation_player.play("Jump")
 			_play_glitch_jump()
-		
-		
+
 	move_and_slide()
-	
+
 	if not is_dying and not was_on_floor and is_on_floor():
+		play_landing_squash()
 		animation_player.play("run_improved")
 		landing_particles.restart()
 		landing_sound.play()
+
+		if camera:
+			camera.play_landing_bump()
 	
 func _play_glitch_jump() -> void:
 	get_tree().call_group("glitch_effects", "play_jump_glitch")
-	
+	if squash_tween:
+		squash_tween.kill()
+		
 	if glitch_tween:
 		glitch_tween.kill()
 	player_sprite.position = sprite_start_position
@@ -59,7 +78,7 @@ func _play_glitch_jump() -> void:
 	
 	glitch_tween = create_tween()
 	#brief compression before the visual corruption.
-	glitch_tween.tween_property(player_sprite, "scale", Vector2(sprite_start_scale.x * 1.25, sprite_start_scale.y * 0.7), 0.025)
+	glitch_tween.tween_property(player_sprite, "scale", Vector2(sprite_start_scale.x * 1.45, sprite_start_scale.y * 0.8), 0.04)
 	#first sideways visual displacement
 	glitch_tween.tween_property(player_sprite, "position", sprite_start_position + Vector2(7, -2), 0.02)
 	glitch_tween.parallel().tween_property(player_sprite, "modulate", Color(0.2, 1.0, 1.0, 1.0), 0.02)
@@ -98,6 +117,9 @@ func _play_glitch_jump() -> void:
 
 func _start_glitch_death() -> void:
 	
+	if squash_tween:
+		squash_tween.kill()
+		
 	is_dying = true
 	GameManager.begin_game_over()
 	
@@ -260,3 +282,16 @@ func _on_obstacle_detector_body_entered(body: Node2D) -> void:
 	
 	if body.is_in_group("Obstacles"):
 		_start_glitch_death()
+		
+func play_landing_squash() -> void:
+	if squash_tween:
+		squash_tween.kill()
+	player_sprite.scale = sprite_start_scale
+	
+	squash_tween = create_tween()
+	
+	squash_tween.tween_property(player_sprite,"scale",sprite_start_scale * Vector2(1.4, 0.82),0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	squash_tween.tween_property(player_sprite, "scale", sprite_start_scale, 0.10).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	
+	
+	

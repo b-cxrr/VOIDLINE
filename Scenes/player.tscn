@@ -17,7 +17,12 @@ colors = PackedColorArray(0, 0.8980392, 1, 1, 1, 1, 1, 1, 0.6156863, 0.3019608, 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_g7dly"]
 gradient = SubResource("Gradient_cvnsp")
 
+[sub_resource type="Curve" id="Curve_cvnsp"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="CurveTexture" id="CurveTexture_vv4qj"]
+curve = SubResource("Curve_cvnsp")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g868d"]
 particle_flag_disable_z = true
