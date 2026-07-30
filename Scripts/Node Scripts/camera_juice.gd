@@ -11,6 +11,10 @@ func _ready() -> void:
 	
 	
 func play_landing_bump() -> void:
+	
+	if not SettingsManager.camera_effects_enabled:
+		return
+		
 	if bump_tween:
 		bump_tween.kill()
 		

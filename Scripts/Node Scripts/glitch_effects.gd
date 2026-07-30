@@ -31,6 +31,11 @@ func play_death_glitch() -> void:
 
 
 func _play_camera_jolt(strength: float) -> void:
+	if not SettingsManager.camera_effects_enabled:
+		return
+	
+	strength *= SettingsManager.glitch_intensity
+	
 	if camera_tween:
 		camera_tween.kill()
 
@@ -63,6 +68,7 @@ func _play_screen_glitch(
 	max_intensity: float,
 	duration: float
 ) -> void:
+	max_intensity *= SettingsManager.glitch_intensity
 	if overlay_tween:
 		overlay_tween.kill()
 

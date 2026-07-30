@@ -1,16 +1,22 @@
 extends TextureButton
 
 
-func _process(delta : float) -> void:
-	if GameManager.is_game_over or GameManager.is_ending_game:
+@onready var pause_menu: Control = $"../../PauseMenu"
+
+
+func _process(_delta: float) -> void:
+	if GameManager.is_game_over \
+	or GameManager.is_ending_game:
 		hide()
-	else: 
+	else:
 		show()
 
 
 func _on_button_down() -> void:
-	if GameManager.is_game_over or GameManager.is_ending_game:
+	if GameManager.is_game_over \
+	or GameManager.is_ending_game:
 		return
-	if Engine.time_scale > 0:
-		Engine.time_scale = 0.0
-	else: Engine.time_scale = 1.0
+
+	HapticsManager.ui_press()
+	pause_menu.open_pause_menu()
+	

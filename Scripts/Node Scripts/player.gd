@@ -49,17 +49,19 @@ func _physics_process(delta: float) -> void:
 			jump_input = false
 			coyote_timer = 0.0
 
-			velocity.y = -jump_force
+			velocity.y = -jump_force #succesful jump
 			animation_player.play("Jump")
 			_play_glitch_jump()
+			HapticsManager.jump()
 
 	move_and_slide()
 
-	if not is_dying and not was_on_floor and is_on_floor():
+	if not is_dying and not was_on_floor and is_on_floor(): #succesful land
 		play_landing_squash()
 		animation_player.play("run_improved")
 		landing_particles.restart()
 		landing_sound.play()
+		HapticsManager.landing()
 
 		if camera:
 			camera.play_landing_bump()
@@ -83,7 +85,9 @@ func _play_glitch_jump() -> void:
 	glitch_tween.tween_property(player_sprite, "position", sprite_start_position + Vector2(7, -2), 0.02)
 	glitch_tween.parallel().tween_property(player_sprite, "modulate", Color(0.2, 1.0, 1.0, 1.0), 0.02)
 	# Flicker out.
-	glitch_tween.tween_callback(func(): player_sprite.visible = false)
+	glitch_tween.tween_callback(func():
+		if not SettingsManager.reduce_flashing:
+			player_sprite.visible = false)
 	glitch_tween.tween_interval(0.025)
 	#Reappear displaced in the opposite direction
 	glitch_tween.tween_callback(
@@ -121,6 +125,7 @@ func _start_glitch_death() -> void:
 		squash_tween.kill()
 		
 	is_dying = true
+	HapticsManager.death()
 	GameManager.begin_game_over()
 	
 	get_tree().call_group("glitch_effects", "play_death_glitch")
@@ -172,7 +177,8 @@ func _start_glitch_death() -> void:
 
 	# First flicker.
 	glitch_tween.tween_callback(
-		func(): player_sprite.visible = false
+		func(): if not SettingsManager.reduce_flashing:
+			player_sprite.visible = false
 	)
 
 	glitch_tween.tween_interval(0.04)
@@ -204,7 +210,8 @@ func _start_glitch_death() -> void:
 
 	# Rapid flicker.
 	glitch_tween.tween_callback(
-		func(): player_sprite.visible = false
+		func(): if not SettingsManager.reduce_flashing:
+			player_sprite.visible = false
 	)
 
 	glitch_tween.tween_interval(0.035)

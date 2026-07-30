@@ -15,11 +15,17 @@ run/main_scene="uid://dhb4mh4r1lev5"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://ux43nybgc3er"
+
 [autoload]
 
 GameManager="*uid://btwvle05jmb1g"
 SaveManager="*uid://bgu4pwivyk58r"
 AudioManager="*uid://o64f0o4qbne8"
+SettingsManager="*uid://dgkem0qw087n2"
+HapticsManager="*uid://dxqvkluo0xgm6"
 
 [display]
 

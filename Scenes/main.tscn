@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://q4rkjo2rqfxe" path="res://Scenes/ground.tscn" id="1_bo1nx"]
 [ext_resource type="Script" uid="uid://bhqi2myrdlhx8" path="res://Scripts/Node Scripts/main.gd" id="1_fdnlq"]
 [ext_resource type="PackedScene" uid="uid://c56rcgu0latxr" path="res://Scenes/player.tscn" id="2_8gbba"]
+[ext_resource type="Script" uid="uid://w1ldotrnf3e6" path="res://Scripts/Node Scripts/brightness_controller.gd" id="2_cbgmd"]
 [ext_resource type="Script" uid="uid://spx832mrnkqk" path="res://Scripts/Node Scripts/camera_juice.gd" id="3_ee4r6"]
 [ext_resource type="AudioStream" uid="uid://bdndw0dqkl3e" path="res://Audio/Jump_Raw_PH.wav" id="4_b3802"]
 [ext_resource type="Script" uid="uid://n6mpwmkbvk7r" path="res://Scripts/Node Scripts/obstacle_spawner.gd" id="4_jjvhh"]
@@ -23,6 +24,8 @@
 [ext_resource type="Texture2D" uid="uid://cipudmd7uohf6" path="res://Sprites/UI_Background96x96.png" id="12_k12tt"]
 [ext_resource type="Texture2D" uid="uid://c3e2ntr7bhkor" path="res://Sprites/pause_icon96x96.png" id="15_h1bgf"]
 [ext_resource type="Script" uid="uid://ct0lp8cacqgkl" path="res://Scripts/Node Scripts/glitch_effects.gd" id="15_k12tt"]
+[ext_resource type="Script" uid="uid://tgxr5p2u0p0v" path="res://Scripts/Node Scripts/settings_menu.gd" id="24_1w6v2"]
+[ext_resource type="Script" uid="uid://bq38x6ctomktg" path="res://Scripts/Node Scripts/pause_menu.gd" id="25_ueoa1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tls2j"]
 shader = ExtResource("8_wsu2k")
@@ -60,6 +63,9 @@ shadow_color = Color(0, 0, 0, 0.8901961)
 [node name="Main" type="Node2D" unique_id=1566659616]
 script = ExtResource("1_fdnlq")
 
+[node name="WorldBrightness" type="CanvasModulate" parent="." unique_id=1869961513]
+script = ExtResource("2_cbgmd")
+
 [node name="Ground" parent="." unique_id=596075265 instance=ExtResource("1_bo1nx")]
 start = 32.0
 end = -32.0
@@ -77,6 +83,7 @@ position = Vector2(-123, 0)
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Player" unique_id=1530122724]
 stream = ExtResource("4_b3802")
 volume_db = 6.976
+bus = &"SFX"
 
 [node name="BG" type="Node" parent="." unique_id=1501803197]
 
@@ -154,6 +161,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="GameOverScreen" type="TextureRect" parent="CanvasLayer" unique_id=1998803575]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -286,8 +294,267 @@ horizontal_alignment = 3
 vertical_alignment = 1
 script = ExtResource("7_6bp64")
 
+[node name="SettingsMenu" type="Control" parent="CanvasLayer" unique_id=1842469113]
+process_mode = 2
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("24_1w6v2")
+
+[node name="DimBackground" type="ColorRect" parent="CanvasLayer/SettingsMenu" unique_id=767732493]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0, 0, 0, 0.003921569)
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/SettingsMenu" unique_id=1616488762]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="CanvasLayer/SettingsMenu/CenterContainer" unique_id=983577561]
+custom_minimum_size = Vector2(650, 300)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel" unique_id=1927560339]
+layout_mode = 2
+theme_override_constants/margin_left = 35
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 35
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer" unique_id=1877853583]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SettingsTitle" type="Label" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=926696575]
+layout_mode = 2
+
+[node name="VibrationRow" type="HBoxContainer" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=479200155]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/VibrationRow" unique_id=319694880]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Vibration"
+
+[node name="VibrationToggle" type="CheckButton" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/VibrationRow" unique_id=171036248]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HapticRow" type="HBoxContainer" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=755927972]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/HapticRow" unique_id=1551049811]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Haptics"
+
+[node name="HapticSlider" type="HSlider" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/HapticRow" unique_id=1061003920]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+
+[node name="MasterRow" type="HBoxContainer" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=868361108]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/MasterRow" unique_id=1993173332]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Master Volume"
+
+[node name="MasterSlider" type="HSlider" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/MasterRow" unique_id=1268303642]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+
+[node name="MusicRow" type="HBoxContainer" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=962085280]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/MusicRow" unique_id=944407413]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Music Volume"
+
+[node name="MusicSlider" type="HSlider" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/MusicRow" unique_id=1285556957]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+
+[node name="SFXRow" type="HBoxContainer" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=874072345]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/SFXRow" unique_id=125598974]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SFX Volume"
+
+[node name="SFXSlider" type="HSlider" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/SFXRow" unique_id=1255088378]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+
+[node name="BrightnessRow" type="HBoxContainer" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=1225960317]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/BrightnessRow" unique_id=1110507897]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Brightness"
+
+[node name="BrightnessSlider" type="HSlider" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/BrightnessRow" unique_id=1287559092]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+min_value = 0.4
+max_value = 1.0
+step = 0.05
+value = 0.4
+
+[node name="CameraEffectsRow" type="HBoxContainer" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=1528278929]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/CameraEffectsRow" unique_id=120706679]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Camera Effects"
+
+[node name="CameraEffectsToggle" type="CheckButton" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/CameraEffectsRow" unique_id=341806103]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+
+[node name="GlitchRow" type="HBoxContainer" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=722532468]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/GlitchRow" unique_id=937016833]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Glitch Effects"
+
+[node name="GlitchSlider" type="HSlider" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/GlitchRow" unique_id=1606994195]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+
+[node name="FlashingRow" type="HBoxContainer" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=335898809]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/FlashingRow" unique_id=1983039343]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Flashing Effects"
+
+[node name="ReduceFlashingToggle" type="CheckButton" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/FlashingRow" unique_id=1620809512]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=1596469062]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 65)
+layout_mode = 2
+size_flags_vertical = 3
+text = "Back"
+
+[node name="PauseMenu" type="Control" parent="CanvasLayer" unique_id=899417906]
+process_mode = 3
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("25_ueoa1")
+
+[node name="DimBackground" type="ColorRect" parent="CanvasLayer/PauseMenu" unique_id=1331483464]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.003921569)
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/PauseMenu" unique_id=650545081]
+custom_minimum_size = Vector2(420, 260)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PauseMenu/CenterContainer" unique_id=2051235100]
+custom_minimum_size = Vector2(420, 260)
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="PausedLabel" type="Label" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer" unique_id=171092840]
+layout_mode = 2
+
+[node name="ResumeButton" type="Button" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer" unique_id=2059661395]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+size_flags_vertical = 3
+text = "RESUME"
+
+[node name="SettingsButton" type="Button" parent="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer" unique_id=1092524943]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+size_flags_vertical = 3
+text = "SETTINGS"
+
 [node name="GlitchEffects" type="Node" parent="." unique_id=984144693]
 script = ExtResource("15_k12tt")
 
 [connection signal="button_down" from="CanvasLayer/GameOverScreen/RestartArea/Restart" to="CanvasLayer/GameOverScreen/RestartArea/Restart" method="_on_button_down"]
 [connection signal="button_down" from="CanvasLayer/HUD/PauseButton" to="CanvasLayer/HUD/PauseButton" method="_on_button_down"]
+[connection signal="toggled" from="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/VibrationRow/VibrationToggle" to="CanvasLayer/SettingsMenu" method="_on_vibration_toggle_toggled"]
+[connection signal="value_changed" from="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/HapticRow/HapticSlider" to="CanvasLayer/SettingsMenu" method="_on_haptic_slider_value_changed"]
+[connection signal="value_changed" from="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/MasterRow/MasterSlider" to="CanvasLayer/SettingsMenu" method="_on_master_slider_value_changed"]
+[connection signal="value_changed" from="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/MusicRow/MusicSlider" to="CanvasLayer/SettingsMenu" method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/SFXRow/SFXSlider" to="CanvasLayer/SettingsMenu" method="_on_sfx_slider_value_changed"]
+[connection signal="value_changed" from="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/BrightnessRow/BrightnessSlider" to="CanvasLayer/SettingsMenu" method="_on_brightness_slider_value_changed"]
+[connection signal="toggled" from="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/CameraEffectsRow/CameraEffectsToggle" to="CanvasLayer/SettingsMenu" method="_on_camera_effects_toggle_toggled"]
+[connection signal="value_changed" from="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/GlitchRow/GlitchSlider" to="CanvasLayer/SettingsMenu" method="_on_glitch_slider_value_changed"]
+[connection signal="toggled" from="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/FlashingRow/ReduceFlashingToggle" to="CanvasLayer/SettingsMenu" method="_on_reduce_flashing_toggle_toggled"]
+[connection signal="pressed" from="CanvasLayer/SettingsMenu/CenterContainer/Panel/MarginContainer/VBoxContainer/BackButton" to="CanvasLayer/SettingsMenu" method="_on_back_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/ResumeButton" to="CanvasLayer/PauseMenu" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/CenterContainer/VBoxContainer/SettingsButton" to="CanvasLayer/PauseMenu" method="_on_settings_button_pressed"]

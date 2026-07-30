@@ -518,25 +518,27 @@ scale = Vector2(0.54201686, 0.53538465)
 texture = ExtResource("1_6l63f")
 
 [node name="TorsoPivot" type="Node2D" parent="Rig/PivotRoot" unique_id=755915309]
-position = Vector2(4, -14.3502655)
+position = Vector2(36, -13.999985)
+rotation = 0.23897746
 
 [node name="Torso" type="Sprite2D" parent="Rig/PivotRoot/TorsoPivot" unique_id=1350775943]
 position = Vector2(-18, 62.118843)
+rotation = -0.00397491
 scale = Vector2(0.47407407, 0.5717461)
 texture = ExtResource("2_gc51w")
 
 [node name="HeadPivot" type="Node2D" parent="Rig/PivotRoot" unique_id=681859924]
 z_index = 1
-position = Vector2(13, -54.947067)
+position = Vector2(46, -60.999985)
 
 [node name="Head" type="Sprite2D" parent="Rig/PivotRoot/HeadPivot" unique_id=2220407]
-position = Vector2(29.5, -27.66253)
-scale = Vector2(0.5431655, 0.48368004)
+position = Vector2(24.999996, -25.081718)
+scale = Vector2(0.51079136, 0.46647462)
 texture = ExtResource("3_6ed6d")
 
 [node name="LeftShoulder" type="Node2D" parent="Rig/PivotRoot" unique_id=203642353]
 z_index = -3
-position = Vector2(14, -7.7754364)
+position = Vector2(48, -15.999985)
 
 [node name="LeftArm" type="Sprite2D" parent="Rig/PivotRoot/LeftShoulder" unique_id=1379000149]
 position = Vector2(26.130869, 53.396927)
