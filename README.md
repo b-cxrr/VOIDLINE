@@ -251,18 +251,6 @@ The intention is for these systems to affect atmosphere and presentation rather 
 
 ---
 
-## Screenshots
-
-*Gameplay screenshots and GIFs will be added here.*
-
-```text
-docs/screenshots/gameplay.png
-docs/screenshots/glitch_jump.png
-docs/screenshots/game_over.png
-```
-
----
-
 ## What I Learned
 
 VOID//LINE has helped me develop practical experience with:
